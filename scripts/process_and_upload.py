@@ -90,7 +90,10 @@ def main():
         
         # Show column names to verify
         logging.info(f"Columns found: {df.columns.tolist()}")
+        
         logging.info(f"Sample data (first 3 rows):")
+        df = df[['Filial', 'CPF', 'Nome do Cliente', 'Criado em', 'Valor', 'Tipo de Venda', 'Frete', 
+                 'Pagamento', 'Status Pagamento', 'Envio PDV', 'Envio Marka', 'Status PDV', 'Pendências']]
         print(df.head(3))
         
     except Exception as e:
