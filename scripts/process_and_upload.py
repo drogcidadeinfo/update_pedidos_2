@@ -70,6 +70,7 @@ def update_google_sheet(df, sheet_id):
     update_worksheet(df, sheet_id, "APP", client)
 
 def main():
+    # Get the latest CSV file
     csv_file = get_latest_file('csv')
     
     if csv_file is None:
@@ -78,14 +79,32 @@ def main():
     
     logging.info(f"Found CSV file: {csv_file}")
     
+    # Read CSV file with correct delimiter
     try:
-        df = pd.read_csv(csv_file)
+        df = pd.read_csv(
+            csv_file,
+            delimiter=';',           # Semicolon delimiter
+            encoding='utf-8',        # UTF-8 encoding
+            decimal=',',             # Decimal comma (for numbers like "59,90")
+            quotechar='"',           # Quoted fields with double quotes
+            thousands='.',           # Thousands separator (like in CPF: 000.00.00-00)
+            dtype=str                # Read all as string to preserve formatting
+        )
         logging.info(f"CSV file loaded successfully. Shape: {df.shape}")
+        
+        # Show column names to verify
+        logging.info(f"Columns found: {df.columns.tolist()}")
+        logging.info(f"Sample data (first 3 rows):")
+        print(df.head(3))
+        
     except Exception as e:
         logging.error(f"Error reading CSV file: {e}")
         return
     
-    sheet_id = os.getenv("sheet_id")
+    # Your Google Sheet ID
+    sheet_id = os.getenv("sheet_id") # Replace with your actual Google Sheet ID
+    
+    # Update Google Sheet
     update_google_sheet(df, sheet_id)
 
 if __name__ == "__main__":
