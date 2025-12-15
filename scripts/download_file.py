@@ -62,6 +62,7 @@ try:
     
     logging.info("Download file")
     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, "//td[text()='Marketing Drogaria']/following-sibling::td[3]/a"))).click()
+    time.sleep(10)
     
     files = os.listdir(download_dir)
     downloaded_files = [f for f in files if f.endswith('.csv')]
