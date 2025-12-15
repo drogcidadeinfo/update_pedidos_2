@@ -60,11 +60,7 @@ def update_google_sheet(df, sheet_id):
     scope = ["https://www.googleapis.com/auth/spreadsheets",
              "https://www.googleapis.com/auth/drive"]
 
-    if creds_env:
-        creds = Credentials.from_service_account_info(json.loads(creds_env), scopes=scope)
-    else:
-        creds = Credentials.from_service_account_file("genserviceacc.json", scopes=scope)
-
+    creds = Credentials.from_service_account_info(json.loads(creds_env), scopes=scope)
     client = gspread.authorize(creds)
 
     update_worksheet(df, sheet_id, "APP", client)
