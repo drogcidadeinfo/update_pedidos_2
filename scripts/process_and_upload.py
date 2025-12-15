@@ -56,7 +56,7 @@ def update_worksheet(df, sheet_id, worksheet_name, client):
 def update_google_sheet(df, sheet_id):
     logging.info("Loading Google credentials...")
 
-    creds_env = os.getenv("GGL_CREDENTIALS")
+    creds_env = os.getenv("GSA_CREDENTIALS")
     scope = ["https://www.googleapis.com/auth/spreadsheets",
              "https://www.googleapis.com/auth/drive"]
 
