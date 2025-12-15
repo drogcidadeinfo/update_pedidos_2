@@ -46,17 +46,21 @@ try:
     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/aside/div/div[4]/div/div/nav/ul/li[9]/a"))).click()
     time.sleep(8)
 
+    logging.info("Inserindo data")
     data = WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.ID, "orders_date_range")))
     data.clear()
     data.send_keys(date_range)
     data.send_keys(Keys.ENTER)
     time.sleep(8)
-    
+
+    logging.info("Click dowload button and wait")
     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div[1]/div[2]/div/div/div[1]/div[2]/div[1]/div/div/div/div/div/div/h1/div[1]/button"))).click()
     time.sleep(20)
     
+    logging.info("Click the downloads tab")
     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/aside/div/div[4]/div/div/nav/ul/li[11]/a"))).click()
     
+    logging.info("Download file")
     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, "//td[text()='Marketing Drogaria']/following-sibling::td[3]/a"))).click()
     
     files = os.listdir(download_dir)
