@@ -77,6 +77,5 @@ except Exception as e:
     logging.error(f"Error: {e}")
 
 finally:
-    time.sleep(15)
     driver.quit()
     logging.info("Browser closed.")
