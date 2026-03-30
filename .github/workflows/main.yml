@@ -2,8 +2,8 @@ name: update_pedidos_2
 
 on:
   workflow_dispatch: 
-  schedule:
-    - cron: '0 8 * * *'  # Runs every day at 5am GMT-3
+  #schedule:
+    #- cron: '0 8 * * *'  # Runs every day at 5am GMT-3
 
 permissions: write-all # Give the workflow permission to write to the repository
 
