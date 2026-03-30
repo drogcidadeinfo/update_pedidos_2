@@ -34,7 +34,6 @@ def retry_api_call(func, retries=3, delay=2):
                 raise
     raise Exception("Max retries reached.")
 
-
 def update_worksheet(df, sheet_id, worksheet_name, client):
     df = df.fillna("")
     rows = [df.columns.tolist()] + df.values.tolist()
@@ -45,13 +44,22 @@ def update_worksheet(df, sheet_id, worksheet_name, client):
         logging.error(f"Error accessing '{worksheet_name}' worksheet: {e}")
         return
 
-    logging.info(f"Clearing worksheet '{worksheet_name}'...")
-    sheet.clear()
-
-    logging.info(f"Updating worksheet '{worksheet_name}'...")
-    sheet.update(rows)
-
-    logging.info(f"Worksheet '{worksheet_name}' updated successfully.")
+    logging.info(f"Appending data to worksheet '{worksheet_name}'...")
+    
+    # Get the next empty row
+    existing_data = sheet.get_all_values()
+    next_row = len(existing_data) + 1 if existing_data else 1
+    
+    # If sheet is empty, add headers first
+    if next_row == 1:
+        logging.info("Worksheet is empty, adding headers...")
+        sheet.append_rows([df.columns.tolist()])
+        next_row = 2
+    
+    # Append the data rows
+    sheet.append_rows(df.values.tolist(), value_input_option='USER_ENTERED')
+    
+    logging.info(f"Appended {len(df)} rows to worksheet '{worksheet_name}' starting at row {next_row}.")
     
 def update_google_sheet(df, sheet_id):
     logging.info("Loading Google credentials...")
