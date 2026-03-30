@@ -12,7 +12,11 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 download_dir = os.getcwd()  
 
 # --- Date setup ---
-date_range = (datetime.now() - timedelta(days=1)).strftime("%d%m%y-%d%m%y")
+# date_range = (datetime.now() - timedelta(days=1)).strftime("%d%m%y-%d%m%y")
+today = datetime.now()
+first_day_of_month = today.replace(day=1)
+yesterday = today - timedelta(days=1)
+date_range = f"{first_day_of_month.strftime('%d%m%y')}-{yesterday.strftime('%d%m%y')}"
 
 # --- Credentials ---
 username = os.getenv("USERNAME")
